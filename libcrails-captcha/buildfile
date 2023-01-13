@@ -1,0 +1,37 @@
+intf_libs = # Interface dependencies.
+impl_libs = # Implementation dependencies.
+import intf_libs += libcapt%lib{capt}
+import intf_libs += libcrails%lib{crails}
+import intf_libs += libcrails-readfile%lib{crails-readfile}
+import intf_libs += libcrails-http-client%lib{crails-http-client}
+import intf_libs += libcrails-logger%lib{crails-logger}
+import intf_libs += ImageMagick++%lib{Magick++}
+
+lib{crails-captcha}: {hxx ixx txx cxx}{**} $impl_libs $intf_libs
+
+hxx{export}@./: cxx.importable = false
+
+cxx.poptions =+ "-I$out_root" "-I$src_root"
+
+{hbmia obja}{*}: cxx.poptions += -DLIBCRAILS_CAPTCHA_STATIC_BUILD
+{hbmis objs}{*}: cxx.poptions += -DLIBCRAILS_CAPTCHA_SHARED_BUILD
+
+lib{crails-captcha}:
+{
+  cxx.export.poptions = "-I$out_root/libcrails-captcha/" "-I$src_root/libcrails-captcha/"
+  cxx.export.libs = $intf_libs
+}
+
+liba{crails-captcha}: cxx.export.poptions += -DLIBCRAILS_CAPTCHA_STATIC
+libs{crails-captcha}: cxx.export.poptions += -DLIBCRAILS_CAPTCHA_SHARED
+
+if $version.pre_release
+  lib{crails-captcha}: bin.lib.version = "-$version.project_id"
+else
+  lib{crails-captcha}: bin.lib.version = "-$version.major.$version.minor"
+
+{hxx ixx txx}{*}:
+{
+  install         = include/
+  install.subdirs = true
+}

@@ -1,0 +1,6 @@
+$out_root/
+{
+  include libcrails-captcha/
+}
+
+export $out_root/libcrails-captcha/$import.target

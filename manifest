@@ -1,0 +1,13 @@
+: 1
+name: libcrails-captcha
+version: 2.0.0
+summary: crails-captcha C++ library
+license: BSD-3-Clause
+description-file: README.md
+url: https://github.com/crails-framework/libcrails-captcha.git
+email: michael@unetresgrossebite.com
+depends: * build2 >= 0.15.0
+depends: * bpkg >= 0.15.0
+depends: libcapt ^1.0.0
+depends: { libcrails libcrails-readfile libcrails-http-client libcrails-logger } ^2.0.0
+depends: ImageMagick++ ^6.9.12
