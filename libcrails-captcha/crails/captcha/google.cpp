@@ -33,10 +33,10 @@ void Captcha::Google::check(Params& params, function<void(bool)> callback) const
   if (captcha_id.exists())
   {
     auto http = make_shared<Ssl::Client>("www.google.com");
-    HttpRequest request{HttpVerb::get, get_verify_url(captcha_id), 11};
+    Client::Request request{HttpVerb::get, get_verify_url(captcha_id), 11};
 
     logger << Logger::Debug << "Performing Captcha::Google::check" << Logger::endl;
-    http->async_query(request, [this, http, callback](const HttpResponse& response, boost::beast::error_code)
+    http->async_query(request, [this, http, callback](const Client::Response& response, boost::beast::error_code)
     {
       DataTree body;
 
